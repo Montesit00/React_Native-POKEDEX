@@ -1,8 +1,9 @@
-import Pokemon from "./components/Pokemon"
-import Detalles from "./components/Detalles"
+import { NavigationContainer } from "@react-navigation/native";
+import Rutas from "./router/Rutas";
+
 
 export default function App() {
   return (
-    <Pokemon/>
+    <Rutas/>
   );
 }

@@ -7,10 +7,10 @@ import React, {useState, useEffect} from 'react';
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 
-const Pokemon = () => {
+const Pokemon = ({navigation}) => {
   
   const [pokemones,setPokemones] = useState([])
   const [buscar,setBuscar] = useState('')
@@ -28,6 +28,7 @@ const Pokemon = () => {
     return json
   }
   
+
   return (
     <View>
       <ImageBackground source={require('../public/oscurofondo.jpg')}>
@@ -54,6 +55,7 @@ const Pokemon = () => {
                       activeOpacity={0.5}
                       key={i}
                       style={estilos.cartas}
+                      onPress={() => navigation.navigate('Detalles')}
                     >
                       <Image
                         style={{width: 200, height: 200}}
