@@ -25,6 +25,8 @@ const Pokemon = ({navigation}) => {
   const fetchPokemon = async () =>{
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=500')
     const json = await response.json()
+
+    console.log(json)
     return json
   }
   
@@ -55,7 +57,7 @@ const Pokemon = ({navigation}) => {
                       activeOpacity={0.5}
                       key={i}
                       style={estilos.cartas}
-                      onPress={() => navigation.navigate('Detalles')}
+                      onPress={() => navigation.navigate('Detalles', {url: pokemon.url})}
                     >
                       <Image
                         style={{width: 200, height: 200}}

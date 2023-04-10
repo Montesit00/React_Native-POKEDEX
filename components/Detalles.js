@@ -7,20 +7,19 @@ import {
     Image
 } from 'react-native';
 
-const Detalles = () => {
+const Detalles = ({route}) => {
 
     const [detalle,setDetalle] = useState()
 
+    const {url} = route.params
+
     useEffect(()=>{
-        fetchPokemonDetalles()
+        fetchPokemonDetalles(url)
         .then(detalle => setDetalle(detalle)) 
       },[])
 
-      console.log(detalle ?.name)
-
-      const fetchPokemonDetalles = async () =>{
-        const id = 2
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+      const fetchPokemonDetalles = async (url) =>{
+        const response = await fetch(url)
         const json = await response.json()
         return json
       }
