@@ -26,7 +26,6 @@ const Pokemon = ({navigation}) => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=500')
     const json = await response.json()
 
-    console.log(json)
     return json
   }
   
