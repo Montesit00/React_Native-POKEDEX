@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
   Text,
   ScrollView,
   FlatList,
+  FlatList,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -63,6 +64,7 @@ const Pokemon = ({navigation}) => {
             <TextInput
               style={estilos.buscadorInput}
               placeholder='Buscar Pokemon'
+              onChangeText={value => buscarPokemon(value)}
               onChangeText={value => buscarPokemon(value)}
             />
           </View>
