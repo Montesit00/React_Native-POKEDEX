@@ -65,7 +65,6 @@ const Pokemon = ({navigation}) => {
               style={estilos.buscadorInput}
               placeholder='Buscar Pokemon'
               onChangeText={value => buscarPokemon(value)}
-              onChangeText={value => buscarPokemon(value)}
             />
           </View>
           
