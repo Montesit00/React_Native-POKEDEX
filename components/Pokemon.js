@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
   View,
   Text,
   ScrollView,
+  FlatList,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -13,8 +14,6 @@ import React, {useState, useEffect} from 'react';
 const Pokemon = ({navigation}) => {
   
   const [pokemones,setPokemones] = useState([])
-  const [buscar,setBuscar] = useState('')
-
 
   useEffect(()=>{
     fetchPokemon()
@@ -28,8 +27,30 @@ const Pokemon = ({navigation}) => {
 
     return json
   }
-  
 
+  const buscarPokemon = (value)=>{
+    const resultados = pokemones.filter(pokemon => pokemon.name.toLowerCase().includes(value.toLowerCase()))
+
+    setPokemones(resultados)
+  }
+  
+  const renderItem = ({item}) => 
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={estilos.cartas}
+              onPress={() => navigation.navigate('Detalles', {url: item.url})}
+            >
+              <Image
+                style={{width: 200, height: 200}}
+                source={{
+                  uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`
+                }}
+              />
+              <View style={estilos.tituloCard}>
+                <Text style={estilos.pokeTitulo}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+  
   return (
     <View>
       <ImageBackground source={require('../public/oscurofondo.jpg')}>
@@ -42,36 +63,12 @@ const Pokemon = ({navigation}) => {
             <TextInput
               style={estilos.buscadorInput}
               placeholder='Buscar Pokemon'
-              onChangeText={value => setBuscar(value)}
-              defaultValue={buscar}
+              onChangeText={value => buscarPokemon(value)}
             />
           </View>
-          <ScrollView>
-            <View style={estilos.container}>
-              {
-                pokemones.filter(pokemon => pokemon.name.toLowerCase().includes(buscar.toLowerCase())
-                ).map((pokemon,i) => {
-                  return (
-                    <TouchableOpacity
-                      activeOpacity={0.5}
-                      key={i}
-                      style={estilos.cartas}
-                      onPress={() => navigation.navigate('Detalles', {url: pokemon.url})}
-                    >
-                      <Image
-                        style={{width: 200, height: 200}}
-                        source={{
-                          uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${pokemon.name}.png`
-                        }}
-                      />
-                      <View style={estilos.tituloCard}>
-                        <Text style={estilos.pokeTitulo}>{pokemon.name}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  ); 
-                })}
-            </View>
-          </ScrollView>
+          
+          <FlatList data={pokemones} renderItem={renderItem}/>
+          
         </View>
       </ImageBackground>
     </View>
@@ -92,7 +89,7 @@ const estilos = StyleSheet.create({
 
   tituloApp:{
     width:'50%',
-    height:50
+    height:80
   },
 
   containerBuscar:{
