@@ -2,30 +2,23 @@ import React, {useState, useEffect} from 'react';
  import {
   View,
   Text,
-  ScrollView,
-  FlatList,
   FlatList,
   Image,
   TouchableOpacity,
-  StyleSheet,
   TextInput,
   ImageBackground,
 } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Pokemon = ({navigation}) => {
   
   const [pokemones,setPokemones] = useState([])
 
-  useEffect(()=>{
-    fetchPokemon()
-    .then(pokemones => setPokemones(pokemones.results))
-  },[])
-
-
   const fetchPokemon = async () =>{
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=500')
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
     const json = await response.json()
-
+    .then(pokemones => setPokemones(pokemones.results))
     return json
   }
 
@@ -34,11 +27,11 @@ const Pokemon = ({navigation}) => {
 
     setPokemones(resultados)
   }
-  
+   
   const renderItem = ({item}) => 
             <TouchableOpacity
               activeOpacity={0.5}
-              style={estilos.cartas}
+              style={styles.cartas}
               onPress={() => navigation.navigate('Detalles', {url: item.url})}
             >
               <Image
@@ -47,50 +40,47 @@ const Pokemon = ({navigation}) => {
                   uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`
                 }}
               />
-              <View style={estilos.tituloCard}>
-                <Text style={estilos.pokeTitulo}>{item.name}</Text>
+              <View style={styles.tituloCard}>
+                <Text style={styles.pokeTitulo}>{item.name}</Text>
               </View>
             </TouchableOpacity>
   
   return (
-    <View>
-      <ImageBackground source={require('../public/oscurofondo.jpg')}>
-        <View style={estilos.tituloMain}>
-          <Image source={require('../public/pokedex.png')} style={estilos.tituloApp}></Image>
-        </View>
-
-        <View style={estilos.containerBuscar}>
-          <View style={estilos.buscadorCont}>
-            <TextInput
-              style={estilos.buscadorInput}
-              placeholder='Buscar Pokemon'
-              onChangeText={value => buscarPokemon(value)}
-            />
-          </View>
-          
+    <View style={styles.container}>
+      <View style={styles.containerBuscar}>
+        <View style={styles.buscador}>
+          <TextInput
+            style={styles.buscadorInput}
+            placeholder='Buscar Pokemon'
+            onChangeText={value => buscarPokemon(value)}
+          />
+        </View>     
+      </View>
+        <TouchableOpacity
+          style={styles.buttonConsumir}
+          onPress={fetchPokemon}
+        >
+          <Text><MaterialCommunityIcons name="cloud-search-outline" size={20} color="black" />  Consumir</Text>
+        </TouchableOpacity>
+      <View>
+        <ImageBackground source={require('../public/oscurofondo.jpg')} >
+      
           <FlatList data={pokemones} renderItem={renderItem}/>
           
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </View>
     </View>
+  
+   
   )
 };
 
 export default Pokemon;
 
-const estilos = StyleSheet.create({
-
-  tituloMain:{
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#F84F4F',
-    padding:20,
-  },
-
-  tituloApp:{
-    width:'50%',
-    height:80
+//style con size-matters
+const styles = ScaledSheet.create({
+  container:{
+    flex:1,
   },
 
   containerBuscar:{
@@ -100,29 +90,32 @@ const estilos = StyleSheet.create({
     alignItems:'center'
   },
 
-  buscadorCont:{
+  buscador:{
     backgroundColor:'#EFF2EF',
-    width:'100%',
-    padding:8,
+    width:'350@s',
+    padding:'8@msr',
   },
 
   buscadorInput:{
-    height: 50,    
+    height: '40@vs',    
     borderWidth:1,    
     borderColor: '#28262C',    
     textAlign: 'center',    
-    width: '100%',
+    width: '330@s',
     borderRadius: 20, 
     backgroundColor:'#D6D6D6',
   },
 
-  container:{
+  buttonConsumir:{
     display:'flex',
-    justifyContent:'center',
-    flexWrap:'wrap',
-    flexDirection:'row',
-    marginTop:10,
-    gap:10
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    fontSize: 16,
+    borderWidth: 1,
+    color: 'black',
+    padding: '10@msr',
+    margin: 10,
   },
 
   cartas:{
@@ -140,13 +133,14 @@ const estilos = StyleSheet.create({
     display:'flex',
     alignItems:'center',
     justifyContent:'center',
-    width:'100%',
-    padding:10,
+    width:'350@s',
+    padding:'10@msr',
     backgroundColor:'#F84F4F',
   },  
 
   pokeTitulo:{
     textTransform:'capitalize',
+    fontSize: 16,
     color:'#28262C'
   }
 });

@@ -6,26 +6,33 @@ import {
     ActivityIndicator,
     Image
 } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+/* import Evolucion from "./Evolucion"; */
 
 const Detalles = ({route}) => {
 
-    const [detalle,setDetalle] = useState()
+    const [detalle,setDetalle] = useState({});
+    const [evolucion,setEvolucion] = useState({});
 
     const {url} = route.params
 
     useEffect(()=>{
-        fetchPokemonDetalles(url)
-        .then(detalle => setDetalle(detalle)) 
-      },[])
+        fetchPokeEvolucion()
+        .then(evolucion=>setEvolucion(evolucion))
+    },[])
 
-      const fetchPokemonDetalles = async (url) =>{
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-      }
-      
+        const urlEvo = `https://pokeapi.co/api/v2/evolution-chain/${detalle.id}`
 
-    return detalle?.name ? (
+        const fetchPokeEvolucion = async (urlEvo)=>{
+            const response = await fetch(urlEvo)
+            const jason = await response.json()
+
+            return jason
+        }
+    
+        
+    
+    return detalle.name ? (
         <View>
             <View style={style.tituloMain}>
                 <Text>{detalle.name}</Text>
@@ -45,6 +52,11 @@ const Detalles = ({route}) => {
                     <Text style={style.pokeInfo}><Text style={style.infoText}>Ataque Basico: </Text> {detalle.stats[1].base_stat} </Text>
                     <Text style={style.pokeInfo}><Text style={style.infoText}>Pokedex ID:</Text> {detalle.id} </Text>
                 </View>
+                
+                <View>
+                   {/*  <Evolucion/> */}
+                </View>
+
             </View>
         </View>
 
@@ -56,19 +68,19 @@ const Detalles = ({route}) => {
       );
 }
 
-const style = StyleSheet.create({
+const style = ScaledSheet.create({
 
     tituloMain:{
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#F84F4F',
-        padding:20,
+        padding:'20@msr',
     },
 
     imagen:{
-        width: 200,
-        height: 200,
+        width: '200@s',
+        height: '200@vs',
         borderWidth:1,
         borderRadius: 20, 
         borderColor: '#28262C',
@@ -81,15 +93,15 @@ const style = StyleSheet.create({
     },
 
     infoLeft:{
-        width: '50%',
-        padding: 20,
+        width: '160@s',
+        padding: '20@msr',
         gap: 20,
     },
 
     infoRight:{
-        width: '50%',
+        width: '160@s',
         gap: 20,
-        padding: 20,
+        padding: '20@msr',
     },
 
     infoText:{

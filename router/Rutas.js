@@ -3,8 +3,21 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Pokemon from '../components/Pokemon';
 import Detalles from '../components/Detalles';
+import { ScaledSheet } from 'react-native-size-matters';
+import { View,Image, Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
+
+const Titulo = () => {
+    return (
+      <View style={styles.tituloMain}>
+        <Image
+        style={styles.tituloApp}
+        source={require('../public/pokedex.png')}
+        />
+      </View>
+    );
+};
 
 const Rutas = () => {
   return (
@@ -13,6 +26,7 @@ const Rutas = () => {
         <Stack.Screen
             name="Inicio"
             component={Pokemon}
+            options={{headerTitle: () => <Titulo/>, headerStyle: { backgroundColor: '#F84F4F' } }}
         />
         <Stack.Screen
             name="Detalles"
@@ -23,4 +37,19 @@ const Rutas = () => {
   );
 };
 
+const styles = ScaledSheet.create({
+
+  tituloMain:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    padding:'10@msr',
+    marginLeft:-30
+  },
+
+  tituloApp:{
+    width:'210@ms',
+    height:'50@vs'
+  }
+});
 export default Rutas;

@@ -3,7 +3,8 @@ Primera prueba en React Native
 
 # Buenas
 
-Esto esta hecho a modo de practica. Primer uso de react-native
+Esto esta hecho a modo de practica. Primer uso de react-native.
+Aplicacion tiene navegacion, consumo de API, y detalles por ID
 
 ## Inicializar Servidor
 - Primero tendremos que hacer: (Esto inicializara el servidor)
