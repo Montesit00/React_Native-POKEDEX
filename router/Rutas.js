@@ -31,6 +31,9 @@ const Rutas = () => {
         <Stack.Screen
             name="Detalles"
             component={Detalles} 
+            options={{
+              headerShown: false
+            }}
         />
       </Stack.Navigator>
     </NavigationContainer>

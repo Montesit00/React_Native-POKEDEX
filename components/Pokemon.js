@@ -10,6 +10,7 @@ import React, {useState, useEffect} from 'react';
 } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const Pokemon = ({navigation}) => {
   
@@ -19,6 +20,7 @@ const Pokemon = ({navigation}) => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
     const json = await response.json()
     .then(pokemones => setPokemones(pokemones.results))
+    .catch((e) => console.log(e))
     return json
   }
 
@@ -27,8 +29,12 @@ const Pokemon = ({navigation}) => {
 
     setPokemones(resultados)
   }
+
+  const deletePokemon = (index) => {
+    setPokemones((pokemon) => pokemon.filter((_, i) => i !== index));
+  };
    
-  const renderItem = ({item}) => 
+  const renderItem = ({item,index}) => 
             <TouchableOpacity
               activeOpacity={0.5}
               style={styles.cartas}
@@ -43,12 +49,21 @@ const Pokemon = ({navigation}) => {
               <View style={styles.tituloCard}>
                 <Text style={styles.pokeTitulo}>{item.name}</Text>
               </View>
+              <View style={styles.deleteCard}>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={() => deletePokemon(index)}
+                >
+                  <Text style={styles.deletePoke}>Eliminar</Text>
+                </TouchableOpacity>
+              </View>
             </TouchableOpacity>
   
   return (
     <View style={styles.container}>
       <View style={styles.containerBuscar}>
         <View style={styles.buscador}>
+          <Feather name="search" size={24} color="black" style={styles.icon}/>
           <TextInput
             style={styles.buscadorInput}
             placeholder='Buscar Pokemon'
@@ -93,7 +108,13 @@ const styles = ScaledSheet.create({
   buscador:{
     backgroundColor:'#EFF2EF',
     width:'350@s',
-    padding:'8@msr',
+    padding:'4@msr',
+    alignItems:'center',
+    flexDirection: 'row',
+  },
+
+  icon:{
+    marginRight:10
   },
 
   buscadorInput:{
@@ -101,7 +122,7 @@ const styles = ScaledSheet.create({
     borderWidth:1,    
     borderColor: '#28262C',    
     textAlign: 'center',    
-    width: '330@s',
+    width: '310@s',
     borderRadius: 20, 
     backgroundColor:'#D6D6D6',
   },
@@ -142,5 +163,20 @@ const styles = ScaledSheet.create({
     textTransform:'capitalize',
     fontSize: 16,
     color:'#28262C'
-  }
+  },
+
+  deleteCard:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    width:'350@s',
+    padding:'10@msr',
+    backgroundColor:'#FFFFFF',
+  },
+
+  deletePoke:{
+    textTransform:'capitalize',
+    fontSize: 16,
+    color:'#28262C'
+  },
 });

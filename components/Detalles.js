@@ -12,30 +12,26 @@ import { ScaledSheet } from 'react-native-size-matters';
 const Detalles = ({route}) => {
 
     const [detalle,setDetalle] = useState({});
-    const [evolucion,setEvolucion] = useState({});
 
     const {url} = route.params
 
     useEffect(()=>{
-        fetchPokeEvolucion()
-        .then(evolucion=>setEvolucion(evolucion))
-    },[])
+        fetchPokemonDetalles(url)
+      },[])
 
-        const urlEvo = `https://pokeapi.co/api/v2/evolution-chain/${detalle.id}`
-
-        const fetchPokeEvolucion = async (urlEvo)=>{
-            const response = await fetch(urlEvo)
-            const jason = await response.json()
-
-            return jason
+        const fetchPokemonDetalles = async (url) =>{
+            const response = await fetch(url)
+            const json = await response.json()
+            .then(detalle => setDetalle(detalle))
+            .catch((e) => console.log(e))
+            return json
         }
-    
-        
+      
     
     return detalle.name ? (
         <View>
             <View style={style.tituloMain}>
-                <Text>{detalle.name}</Text>
+                <Text style={style.titulo}>{detalle.name}</Text>
             </View>
             <Image
                 style={style.imagen}
@@ -76,6 +72,12 @@ const style = ScaledSheet.create({
         alignItems:'center',
         backgroundColor:'#F84F4F',
         padding:'20@msr',
+       
+    },
+
+    titulo:{
+        fontSize:18,
+        color:'#FFFFFF'
     },
 
     imagen:{

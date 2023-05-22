@@ -7,8 +7,8 @@ Esto esta hecho a modo de practica. Primer uso de react-native.
 Aplicacion tiene navegacion, consumo de API, y detalles por ID
 
 ## Inicializar Servidor
-- Primero tendremos que hacer: (Esto inicializara el servidor)
-npm start.
+- Primero tendremos que hacer:
+npx expo start
 
 - Despues de eso debemos apretar la tecla W.
 W
