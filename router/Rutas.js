@@ -4,7 +4,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Pokemon from '../components/Pokemon';
 import Detalles from '../components/Detalles';
 import { ScaledSheet } from 'react-native-size-matters';
-import { View,Image, Text } from "react-native";
+import { View,Image } from "react-native";
+import login from '../components/login';
+import registro from '../components/registro';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +27,18 @@ const Rutas = () => {
       <Stack.Navigator initialRouteName='Inicio'>
         <Stack.Screen
             name="Inicio"
-            component={Pokemon}
-            options={{headerTitle: () => <Titulo/>, headerStyle: { backgroundColor: '#F84F4F' } }}
+            component={registro}
+            options={{headerShown:false}}
+        />
+        <Stack.Screen
+            name='Login'
+            component={login}
+            options={{headerShown:false}}
+        />
+        <Stack.Screen 
+          name='Pokemones'
+          component={Pokemon}
+          options={{headerTitle: () => <Titulo/>, headerStyle: { backgroundColor: '#F84F4F' } }}
         />
         <Stack.Screen
             name="Detalles"
