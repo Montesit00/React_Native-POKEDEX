@@ -1,10 +1,10 @@
 # Pokedex-Native
-Primera prueba en React Native
+Pokedex con React Native
 
 # Buenas
 
 Esto esta hecho a modo de practica. Primer uso de react-native.
-Aplicacion tiene navegacion, consumo de API, y detalles por ID
+Esta aplicacion tiene navegacion, consumo de API, y detalles por ID
 
 ## Inicializar Servidor
 - Primero tendremos que hacer:
